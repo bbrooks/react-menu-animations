@@ -1,3 +1,12 @@
+// Emulate a phone wrapper on larger screens
 body {
-	margin: 0;
+	$iPhone6-Plus-Width: 414px;
+	@media (min-width: 414px) { 
+		box-sizing: border-box;
+		margin: 0 auto;
+		width: $iPhone6-Plus-Width;
+		border: 5px solid #333;
+		border-top: 0;
+		border-bottom: 0;
+	}
 }
