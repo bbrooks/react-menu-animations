@@ -1,0 +1,364 @@
+
+/* ==========================================================================
+ 	Styles for this Menu Animations experiment
+========================================================================== */
+
+@import 'vendor/hamburgers/hamburgers';
+
+
+/* Colors
+========================================================================== */
+$primary-dark: #1E1222;
+$primary-medium: lighten($primary-dark, 10%);
+$primary-light:  #39293C;
+$accent-color: #724046;
+$lightest: #E9E9E9;
+$darkest: #333;
+
+
+/* Base
+========================================================================== */
+.app-container {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+	color: $lightest;
+	line-height: 1.2;
+	
+	button {
+		cursor: pointer;
+		background: none;
+		outline: none;
+		border: none;
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+}
+
+
+/* High Level Component Layout
+========================================================================== */
+.app-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+
+	.main-content-wrap{
+		flex: 1;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.menu {
+
+		&.lvl-1 {
+			display: flex;
+			flex-direction: column;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+
+			& > .item-list {
+				flex: 1;
+				position: relative; // So we can absolutely position the level-2 menu inside
+			}
+				
+		}
+
+		// This is the container for the level-2 submenu
+		// which contains a menu and an invisible button 
+		// to close that menu sitting to the left of it
+		.item.lvl-1 > .submenu-wrap {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: flex;
+			z-index: 2;
+
+			& > .menu-close-invisible {
+				width: 60px; // Determines the gutter to the left of the level-2 submenu
+			}
+
+			& > .menu {
+				flex: 1;
+				overflow: auto; // Allows for super long side-menus to scroll
+				
+			}
+		}
+	}	
+}
+
+
+/* Components
+========================================================================== */
+.nav-bar {
+	display: block;
+	background-color: $primary-dark;
+	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.nav-bar-icon {
+		margin-left: 8px;
+	}
+
+	.hamburger {
+		border: none;
+	}
+}
+
+.menu {
+	margin: 0;
+	padding: 0;
+
+	&.lvl-1 {
+		overflow-y: auto;
+		overflow-x: hidden;
+
+		& > .item-list {
+			background-color: $primary-light;
+		}
+
+		& > .menu-title-wrap {
+			background: $accent-color;
+			border-bottom: 2px solid $lightest;
+			color: $lightest;
+			margin: 0;
+			padding: 20px;
+			font-size: 16px;
+
+			.menu-title {
+				display: inline;
+				font-weight: bold;
+				font-size: inherit;
+			}
+			.menu-description {
+				display: inline;
+				&::before { content: ' ';}
+			}
+		}
+	}
+
+	&.lvl-2 {
+		background-color: $primary-dark;
+		border-left: 2px solid rgba(white, .7);
+
+		& > .menu-title-wrap {
+			display: flex;
+			align-items: center;
+			align-content: middle;
+			
+			.menu-title {
+				flex: 1;
+				margin: 20px;
+				font-size: 15px;
+			}
+
+			.menu-close {
+				&::before {
+					content: '✕';
+					font-family: 'arial';
+					display: block;
+					font-size: 20px;
+					color: white;
+					opacity: 0.8;
+					margin-right: 5px;
+				}
+			}
+
+		}
+	}
+}
+
+.item {
+	display: block;
+
+	& > .item-content-wrap {
+		display: flex;
+		align-items: stretch;
+		align-content: center;
+
+		.item-text { flex: 1; }
+	}
+
+	&.lvl-1 { 
+		border-bottom: 1px solid rgba(255, 255, 255, .5);
+		text-transform: uppercase;
+		font-weight: 500;
+
+		&.active,
+		&:hover {
+			background-color: lighten($primary-light, 10%);
+		}
+
+		& > .item-content-wrap {
+
+			.submenu-button {
+				width: 50px;
+				font-size: 30px;
+				background-color: darken($primary-light, 5%);
+
+				&:hover { background-color: darken($primary-light, 10%); }
+
+				&:active { background-color: lighten($primary-light, 5%); }
+
+				&::before {
+					content: '›';
+					font-family: 'arial';
+					display: block;
+					font-size: 29px;
+					color: white;
+					opacity: 0.8;
+					margin-bottom: 4px;
+				}
+			}
+
+			.item-text { padding: 20px; }
+		}
+	}
+
+	&.lvl-2 {
+		border-bottom: 1px solid $primary-medium; 
+		font-size: 15px;
+		text-transform: capitalize;
+
+		&:hover {
+			background-color: lighten($primary-dark, 5%);
+		}
+
+		& > .item-content-wrap {
+
+			.submenu-button {
+				font-size: 30px;
+				width: 40px;
+
+				&::before {
+					content: '›';
+					font-family: 'arial';
+					display: block;
+					font-size: 20px;
+					color: white;
+					opacity: 0.8;
+					transform: rotate(90deg);
+					transition: transform 300ms;
+				}
+
+				&.active::before {
+					transform: rotate(-90deg);
+				}
+			}
+
+			.item-text { padding: 15px 15px 15px 30px; }
+		}
+	}
+
+	&.lvl-3 {
+		cursor: pointer; 
+		padding: 10px;
+		font-size: 13px;
+		background-color: $primary-medium;
+		border-bottom: 1px solid darken($primary-medium, 5%);
+		padding-left: 50px;
+
+		&:hover {
+			background-color: darken($primary-medium, 5%);
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}
+
+
+/* Entrance & Exit Animations
+========================================================================== */
+// The first-level menu slides in and out from the left
+.lvl-1-menu-enter {
+	transform: translate3d(-100%, 0, 0);
+
+	&.lvl-1-menu-enter-active {
+		transform: translate3d(0, 0, 0);
+		transition: transform 300ms ease-in;
+	}
+}
+
+.lvl-1-menu-leave {
+	transform: translate3d(0, 0, 0);
+
+	&.lvl-1-menu-leave-active {
+		transform: translate3d(-100%, 0, 0);
+		transition: transform 200ms ease-in;
+	}
+}
+
+// The second-level menu slides in and out from the right
+.lvl-2-menu-enter {
+	transform: translate3d(100%, 0, 0);
+
+	&.lvl-2-menu-enter-active {
+		transform: translate3d(0, 0, 0);
+		transition: transform 300ms ease-in;
+	}
+}
+
+.lvl-2-menu-leave {
+	transform: translate3d(0, 0, 0);
+
+	&.lvl-2-menu-leave-active {
+		transform: translate3d(100%, 0, 0);
+		transition: transform 200ms ease-in;
+	}
+}
+
+// The third-level menu expands downward and contracts upward
+.lvl-3-menu-enter {
+	max-height: 0;
+	overflow: hidden;
+
+	&.lvl-3-menu-enter-active {
+		transition: max-height 300ms ease-in;
+		max-height: 500px;
+	}
+}
+
+.lvl-3-menu-leave {
+	max-height: 500px;
+	overflow: hidden;
+
+	&.lvl-3-menu-leave-active {
+		max-height: 0;
+		transition: max-height 150ms linear;
+	}
+}
+
+/* Splash Page Styles
+========================================================================== */
+.splash-wrap {
+	flex: 1;
+	position: relative;
+	text-align: center;
+	opacity: 0.8; // Soften those hard black images
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.splash-instruction-img { 
+		position: absolute;
+		right: 26px;
+		top: 4px;
+	}
+
+	.splash-main-img {
+		max-width: 100%;
+		height: auto;
+	}
+}
