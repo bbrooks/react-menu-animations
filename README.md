@@ -1,4 +1,4 @@
-Playing around with React and nested menu animations for small screens. See the demo [here](http://dev.benbrooks.net/react-menu-animations/).
+Playing around with React and nested menu animations for small screens. See the demo [here](https://bbrooks.github.io/react-menu-animations/).
 
 To get up this up and running locally:
 1. run `npm install` from inside the root directory to install dependencies
