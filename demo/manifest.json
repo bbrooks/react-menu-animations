@@ -1,0 +1,6 @@
+{
+  "short_name": "react-menu-animations",
+  "name": "Menu Animations",
+  "start_url": "./index.html",
+  "display": "standalone"
+}
